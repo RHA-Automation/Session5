@@ -22,6 +22,7 @@ pip install ansible-builder
 ## Usage
 
 Get the container images that we will be using to build off of:
+
 ~~~bash
 podman login registry.redhat.io
 podman pull registry.redhat.io/ansible-automation-platform-21/ee-supported-rhel8:latest
@@ -30,26 +31,31 @@ podman pull registry.redhat.io/ansible-automation-platform-21/ee-minimal-rhel8:l
 ~~~
 
 Create the `execution-environment.yml`, `requirements.yml`, `requirements.txt`, `bindeps.txt`, `ansible.cfg` files that will be used for the build process. Then start the build:
+
 ~~~bash
 ansible-builder build -f execution-environment.yml -t <name>
 ~~~
 
 If you only want to generate the Containerfile, use `create` instead of `build`:
+
 ~~~bash
 ansible-builder create
 ~~~
 
 Investigate the contents of the image using `ansible-navigator` (use `--pp missing` to not pull the image):
+
 ~~~bash
 ansible-navigator images --pp missing
 ~~~
 
 Create a running container and have a look inside of it:
+
 ~~~bash
 podman run -it --rm <name> /bin/bash
 ~~~
 
 Let's use the execution environment we've created to run a job using the collections we've baked into it:
+
 ~~~bash
 ansible-navigator run ping.yml -i inventory --ll debug -m stdout
 ~~~

@@ -1,60 +1,39 @@
-# Session 5
+# Session 5 (Mar 1, 2022)
 
 ## Motivation
 
-`ansible-navigator` is a textual user interface (TUI) available to Ansible Automation Platform (AAP) subscribers and has been introduced with Ansible Automation Platform 2 as the primary interface for creating and testing ansible automation.
+Ansible Builder is a command line tool that automates the process of building automation execution environments by using the metadata defined in various Ansible Collections, as well as by the user.
 
-`ansible-navigator` also functions as a drop-in replacement for `ansible-playbook`, among other `ansible-*` utilities, and is the standard way of executing automation moving into Ansible Automation Platform 2.
+Before Ansible Builder was developed, Automation Platform users would potentially run against dependency issues and multiple error messages as they attempted to create a custom virtual environment or container that had all of their required dependencies installed.
+
+Through the use of an easily customizable definition file, Ansible Builder installs Ansible, specified Collections and any of its dependencies so that all of the necessary requirements to get jobs running are fulfilled behind the scenes.
 
 ## Installation
 
-If you are not getting `ansible-navigator` from your AAP subscription (or even a developer subscription), you can install it using `pip` (adjust to suit your needs):
+If you are not getting `ansible-builder` from your AAP subscription (or even a developer subscription), you can install it using `pip` (adjust to suit your needs):
 
 ~~~bash
-python3.9 -m venv rha-navigator
-source rha-navigator/bin/activate
+python3.9 -m venv rha-builder
+source rha-builder/bin/activate
 pip install --upgrade pip
-pip install ansible-navigator
+pip install ansible-builder
 ~~~
 
 ## Usage
 
-### Old Syntax / New Syntax
+~~~bash
+podman login registry.redhat.io
+podman pull registry.redhat.io/ansible-automation-platform-21/ee-supported-rhel8:latest
+podman pull registry.redhat.io/ansible-automation-platform-21/ee-29-rhel8:latest
+podman pull registry.redhat.io/ansible-automation-platform-21/ee-minimal-rhel8:latest
+~~~
 
-| Old | New (interactive or `-m stdout`) |
-| --- | --- |
-| `ansible-playbook` | `ansible-navigator run` |
-| `ansible-doc` | `ansible-navigator doc` |
-| `ansible-config` | `ansible-navigator config` |
-| `ansible-inventory` | `ansible-navigator inventory` |
+~~~bash
+ansible-builder build -f execution-environment.yml -t <name>
+ansible-builder create
+~~~
 
 #### Examples
-
-~~~bash
-ansible-navigator run ping.yml -i inventory -m stdout
-ansible-navigator doc user -m stdout
-ansible-navigator inventory -i inventory -m stdout --list
-~~~
-
-### Explore the TUI
-
-Stuff we know already:
-
-~~~bash
-:config
-:inventory
-:doc ( :{{ examples }} )
-:open
-:run -i <inventory> ( :doc in task )
-~~~
-
-New options:
-
-~~~bash
-:images
-:collections
-:replay
-~~~
 
 ### Configuration
 
@@ -91,4 +70,4 @@ ansible-navigator run usecase3_rootcontainers_networked.yml -i inventory --ll de
 
 ## Resources
 
-- [Ansible Navigator Creator Guide](https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.1/html-single/ansible_navigator_creator_guide/index)
+- [Ansible Builder Guide](https://access.redhat.com/documentation/en-us/red_hat_ansible_automation_platform/2.1/html/ansible_builder_guide/index)

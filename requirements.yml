@@ -1,0 +1,4 @@
+---
+collections:
+  - redhat.rhv
+  - geerlingguy.k8s

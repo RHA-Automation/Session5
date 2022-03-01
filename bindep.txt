@@ -1,1 +1,2 @@
-libxml2-devel [platform:rpm]
+bzip2 [platform:rpm]
+zsh [platform:rpm]
